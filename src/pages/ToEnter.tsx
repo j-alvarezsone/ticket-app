@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Form, Input, Button, InputNumber, Typography, Divider } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useHideMenu } from '../hooks/useHideMenu';
+import { getUserStorage } from '../helper/getUserStorage';
 
 const { Title, Text } = Typography;
 
@@ -17,9 +19,12 @@ export const ToEnter = () => {
   useHideMenu(false);
 
   const history = useHistory();
+  const [user] = useState(getUserStorage());
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const onFinish = ({ agent, desk }: { agent: string; desk: string }) => {
+    localStorage.setItem('agent', agent);
+    localStorage.setItem('desk', desk);
+
     history.push('/desk');
   };
 
@@ -27,11 +32,16 @@ export const ToEnter = () => {
     console.log('Failed:', errorInfo);
   };
 
+  if (user.agent && user.desk) {
+    return <Redirect to='/desk' />;
+  }
+
   return (
     <>
       <Title level={2}>Enter</Title>
       <Text>Enter your name and desk number</Text>
       <Divider />
+
       <Form
         {...layout}
         name='basic'
@@ -54,8 +64,6 @@ export const ToEnter = () => {
         >
           <InputNumber min={1} max={99} />
         </Form.Item>
-
-        <Form.Item {...tailLayout} name='remember' valuePropName='checked'></Form.Item>
 
         <Form.Item {...tailLayout}>
           <Button type='primary' htmlType='submit' shape='round'>
