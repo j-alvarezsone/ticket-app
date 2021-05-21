@@ -17,7 +17,7 @@ export const RouterPage = () => {
   const { hide } = useContext(UiContext);
   return (
     <Router>
-      <Layout style={{ height: '100vh' }}>
+      <Layout style={{ height: '100vh', overflowX: 'hidden' }}>
         <Sider collapsedWidth='0' breakpoint='md' hidden={hide}>
           <div className='logo' />
           <Menu theme='dark' mode='inline' defaultSelectedKeys={['1']}>
