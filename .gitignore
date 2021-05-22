@@ -24,3 +24,5 @@ yarn-error.log*
 
 # console
 antigen.zsh
+
+package-lock.json

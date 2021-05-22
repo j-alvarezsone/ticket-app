@@ -1,9 +1,12 @@
 import { RouterPage } from './pages/RouterPage';
 import { UiProvider } from './context/UiContext';
+import { SocketProvider } from './context/SocketContext';
 export const TicketApp = () => {
   return (
-    <UiProvider>
-      <RouterPage />
-    </UiProvider>
+    <SocketProvider>
+      <UiProvider>
+        <RouterPage />
+      </UiProvider>
+    </SocketProvider>
   );
 };

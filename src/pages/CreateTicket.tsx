@@ -1,13 +1,21 @@
+import { useContext, useState } from 'react';
 import { Row, Col, Typography, Button } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useHideMenu } from '../hooks/useHideMenu';
+import { SocketContext } from '../context/SocketContext';
+import { NewTicketType } from '../types/types';
 
 const { Title, Text } = Typography;
 export const CreateTicket = () => {
   useHideMenu(true);
 
+  const { socket } = useContext(SocketContext);
+  const [ticket, setTicket] = useState<NewTicketType | null>(null);
+
   const newTicket = () => {
-    console.log('new ticket');
+    socket.emit('request-ticket', null, (ticket: NewTicketType) => {
+      setTicket(ticket);
+    });
   };
 
   return (
@@ -22,15 +30,17 @@ export const CreateTicket = () => {
         </Col>
       </Row>
 
-      <Row justify='center' style={{ marginTop: '100px' }}>
-        <Col span={14} style={{ textAlign: 'center' }}>
-          <Title level={4}>Your number</Title>
-          <br />
-          <Text type='success' style={{ fontSize: 55 }}>
-            55
-          </Text>
-        </Col>
-      </Row>
+      {ticket && (
+        <Row justify='center' style={{ marginTop: '100px' }}>
+          <Col span={14} style={{ textAlign: 'center' }}>
+            <Title level={4}>Your number</Title>
+            <br />
+            <Text type='success' style={{ fontSize: 55 }}>
+              {ticket.number}
+            </Text>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };
