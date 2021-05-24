@@ -34,13 +34,13 @@ export const Desk = () => {
   return (
     <>
       <Row>
-        <Col span={20}>
+        <Col span={19}>
           <Title level={2}>{user.agent}</Title>
           <Text>You are working at the desk: </Text>
           <Text type='success'>{user.desk}</Text>
         </Col>
 
-        <Col span={4}>
+        <Col span={5}>
           <Button shape='round' type='primary' danger onClick={leave}>
             <CloseCircleOutlined />
             Leave
@@ -62,7 +62,7 @@ export const Desk = () => {
       )}
 
       <Row>
-        <Col offset={20} span={8}>
+        <Col offset={19} span={5}>
           <Button shape='round' type='primary' onClick={nextTicket}>
             <RightOutlined />
             Next
