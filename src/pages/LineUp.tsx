@@ -1,6 +1,7 @@
 import { Typography, Row, Col, List, Card, Tag, Divider } from 'antd';
 import { useContext, useState, useEffect } from 'react';
 import { SocketContext } from '../context/SocketContext';
+import { getLast } from '../helper/getLast';
 import { useHideMenu } from '../hooks/useHideMenu';
 import { NewTicketType } from '../types/types';
 
@@ -58,6 +59,10 @@ export const LineUp = () => {
       socket.off('ticket-assigned');
     };
   }, [socket]);
+
+  useEffect(() => {
+    getLast().then((tickets: NewTicketType[]) => setTickets(tickets));
+  }, []);
 
   return (
     <>
